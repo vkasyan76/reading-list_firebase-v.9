@@ -3,11 +3,18 @@
 import BookList from '../components/BookList'
 import BookForm from '../components/BookForm'
 import { useCollection } from '../hooks/useCollection'
+import { useAuthContext } from '../hooks/useAuthContext'
 
 // import { db } from '../firebase/config'
 
 export default function Home() {
-  const { documents: books } = useCollection('books')
+  const { user } = useAuthContext()
+  const { documents: books } = useCollection('books', ['uid', '==', user.uid])
+
+  // const { documents: books } = useCollection('books', ['uid', '==', user.uid])
+
+  // const { documents: books } = useCollection('books')
+
   // const [books, setBooks] = useState(null)
   // // const [books, setBooks] = useState([
   // //   // { title: 'the name of the wind', id: 1 },

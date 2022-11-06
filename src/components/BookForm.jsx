@@ -1,9 +1,12 @@
 import { useState } from 'react'
 import { collection, addDoc } from 'firebase/firestore'
 import { db } from '../firebase/config'
+import { useAuthContext } from '../hooks/useAuthContext'
 
 export default function BookForm() {
   const [newBook, setNewBook] = useState('')
+
+  const { user } = useAuthContext()
 
   const handleSubmit = async (e) => {
     const ref = collection(db, 'books')
@@ -11,6 +14,7 @@ export default function BookForm() {
     // console.log(newBook)
     await addDoc(ref, {
       title: newBook,
+      uid: user.uid,
     })
 
     setNewBook('')
